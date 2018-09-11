@@ -5,4 +5,5 @@ When submitting any new pull requests or issues, please make sure the contributi
 * For issues, please provide info as to what caused problems, what specific element of the page created those problems, and what type of device you were using when the issue occurred.
 
 Thanks!
+
 Josh

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://unpkg.com/flipping@0.5.3/dist/flipping.animationFrame.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.1/Rx.min.js"></script>
+    <link rel="stylesheet" href="house.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <center>
+      <h2 style="color:white;">Get a <b><span style="color:white;">FREE</span></b> quote!</h2>
+    </center>
+    <br>
+    <div class="slidecontainer">
+      <input type="range" min="1" max="8" value="1" class="slider" id="myRange">
+    
+      <b>
+        <p style="color:white; text-align:center;"><span id="demo"></span> Bedrooms</p>
+      </b>
+    </div>
+    
+    <div class="slidecontainer">
+      <input type="range" min="1" max="8" value="1" class="slider2" id="myRange2">
+    
+      <b>
+        <p style="color:white; text-align:center; margin-bottom:12px;"><span id="demo2"></span> Bathrooms<span
+            id="demo2"></span> </p>
+      </b>
+      <br>
+    </div>
+    <center>
+      <p style="color:white; text-align:center;">Would you like a single cleaning, or recurring?</p>
+      <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-dark">One Time</button>
+        <button type="button" autofocus class="btn btn-dark">Weekly</button>
+        <button type="button" class="btn btn-dark">Bi-Weekly</button>
+        <button type="button" class="btn btn-dark">Monthly</button>
+      </div>
+    
+      <br>
+      <b>
+        <p style="color:white; text-align:center; margin-top:6px;" id="demo3">55% Off!</p>
+      </b>
+      <br>
+      <a href="http://onpoint.kristalscrystals.com/book/?category_id=66&service_id=44&pricing_parameter%5B34%5D={BEDROOMS}&pricing_parameter%5B33%5D={BATHROOMS}&frequency_id={FREQUENCY}"
+        type="button" class="btn btn-dark" id="submit">Price Per Cleaning</a>
+    </center>
+    <div class="house" id="house" data-rooms="8">
+      <div class="house-wings" data-flip-key="wings">
+        <div class="house-left-wing">
+          <div class="house-column">
+            <div class="house-window"></div>
+            <div class="house-window"></div>
+            <div class="house-sparkle">
+              <div class="house-sparkle-dots"></div>
+            </div>
+          </div>
+          <div class="house-column">
+            <div class="house-window"></div>
+            <div class="house-window"></div>
+            <div class="house-sparkle">
+              <div class="house-sparkle-dots"></div>
+            </div>
+          </div>
+        </div>
+        <div class="house-right-wing">
+          <div class="house-column">
+            <div class="house-window"></div>
+            <div class="house-window"></div>
+            <div class="house-sparkle">
+              <div class="house-sparkle-dots"></div>
+            </div>
+          </div>
+          <div class="house-column">
+            <div class="house-window"></div>
+            <div class="house-window"></div>
+            <div class="house-sparkle">
+              <div class="house-sparkle-dots"></div>
+            </div>
+          </div>
+        </div>
+        <div class="house-roof">
+          <div class="house-ledge"></div>
+        </div>
+      </div>
+      <div class="house-front" data-flip-key="front">
+        <div class="house-chimney"></div>
+        <div class="house-facade">
+          <div class="house-base"></div>
+        </div>
+        <div class="house-window">
+          <div class="house-sparkle">
+            <div class="house-sparkle-dots"></div>
+          </div>
+        </div>
+        <div class="house-doorway">
+          <div class="house-window">
+            <div class="house-sparkle">
+              <div class="house-sparkle-dots"></div>
+            </div>
+          </div>
+          <div class="house-window">
+            <div class="house-sparkle">
+              <div class="house-sparkle-dots"></div>
+            </div>
+          </div>
+          <div class="house-stairs">
+            <div class="house-sparkle">
+              <div class="house-sparkle-dots"></div>
+            </div>
+          </div>
+          <div class="house-door"></div>
+        </div>
+        <div class="house-gable">
+          <div class="house-roof">
+            <div class="house-ledge"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <label class="house-label" for="range" id="label">Rooms</label>
+    <input
+      class="house-slider"
+      type="range"
+      min="1"
+      max="8"
+      step="1"
+      value="8"
+      id="range"
+    />
+  </body>
+
+  <script>
+
+    var sales_tax = 0.07,
+      base_rate = 160,
+      bedroom_rate = 26,
+      bathroom_rate = 34,
+      weekly_discount = 55,
+      biweekly_discount = 50,
+      monthly_discount = 40,
+      discount = weekly_discount / 100,
+      url_page = $('#submit').attr("href"),
+      url_discount = "23",
+      final_price = 0;
+
+    var bedroom_slider = document.getElementById("myRange");
+    var bedroom_output = document.getElementById("demo");
+    bedroom_output.innerHTML = bedroom_slider.value;
+    bedroom_slider.oninput = function () { UpdatePageValues(); };
+
+    var bathroom_slider = document.getElementById("myRange2");
+    var bathroom_output = document.getElementById("demo2");
+    bathroom_output.innerHTML = bathroom_slider.value;
+    bathroom_slider.oninput = function () { UpdatePageValues(); };
+
+    $(function () {
+      UpdatePageValues();
+      $("[role~=group] > button").click(function () {
+        switch (this.innerHTML) {
+          case "One Time":
+            discount = 0;
+            url_discount = "1";
+            break;
+          default:
+          case "Weekly":
+            discount = weekly_discount;
+            url_discount = "24";
+            break;
+          case "Bi-Weekly":
+            discount = biweekly_discount;
+            url_discount = "22";
+            break;
+          case "Monthly":
+            discount = monthly_discount;
+            url_discount = "21";
+            break;
+        }
+        var discount_output = (discount > 0) ? discount + '% Off!' : "Save up to 55% with recurring appointments!";
+        discount = discount / 100;
+        UpdatePageValues();
+        $('#demo3').text(discount_output);
+      });
+
+      $("#submit").click(function () {
+        GenerateUrlCode();
+        window.location = url_result;
+      });
+    });
+
+    function UpdatePageValues() {
+      bedroom_count = bedroom_slider.value;
+      bathroom_count = bathroom_slider.value;
+      final_price = (base_rate + (bedroom_count * bedroom_rate) + (bathroom_count * bathroom_rate)) * (1 - discount) * 1.07;
+      $('#demo').text(bedroom_slider.value);
+      $('#demo2').text(bathroom_slider.value);
+      $('#submit').text("Price Per Cleaning - $" + final_price.toFixed(2));
+    }
+
+    function GenerateUrlCode() {
+      var url_result = url_page.replace("{BEDROOMS}", bedroom_count).replace("{BATHROOMS}", bathroom_count).replace("{FREQUENCY}", url_discount);
+      $('#submit').attr("href", url_result);
+    }
+
+  </script>
+
+  <script>
+    const house = document.querySelector("#house");
+    const range = document.querySelector("#range");
+    const label = document.querySelector("#label");
+
+    const f = new Flipping();
+    const update = f.wrap(rooms => {
+      const prevRooms = house.getAttribute("data-rooms");
+      house.setAttribute("data-prev-rooms", prevRooms);
+      house.setAttribute("data-rooms", rooms);
+
+      label.setAttribute("data-prev-rooms", prevRooms);
+      label.setAttribute("data-rooms", rooms);
+      label.setAttribute("data-rooms-delta", rooms - prevRooms);
+    });
+
+    const range$ = Rx.Observable.fromEvent(range, "input")
+      .map(e => e.target.value)
+      .startWith(8);
+
+    range$.subscribe(update);
+  </script>
+</html>
